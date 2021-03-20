@@ -21,6 +21,10 @@ body {
   padding: 0;
 }
 
+pre {
+  margin: 0;
+}
+
 /* Markdown Editor Reset */
 .editor-toolbar {
   border-top: none;
@@ -40,4 +44,29 @@ body {
 
 .editor-preview-full.editor-preview.editor-preview-active {
   padding: 10px 20px;
+}
+
+/* Better Scroll Bar */
+:root {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  --scrollbarBG: #f0f2f5;
+  --thumbBG: rgba(19, 53, 90, 0.15);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
 }

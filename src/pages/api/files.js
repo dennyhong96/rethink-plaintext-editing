@@ -3,12 +3,12 @@ import path from 'path';
 
 const FILE_DIR = '_files';
 
+// Simulate listing, reading, and writing back to files with API route & file system.
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    // Get file by name
+    // Return a file by file name
     if (req.query.name) {
-      const fileName = req.query.name;
-      console.log({ fileName });
+      const { name: fileName } = req.query;
       const content = await new Promise(resolve => {
         fs.readFile(path.resolve(FILE_DIR, fileName), function(_, data) {
           resolve(data.toString());
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ content, lastModified: stats.mtime });
     }
 
-    // List all files
+    // Returns all files in _files dir
     const fileNames = fs.readdirSync(FILE_DIR);
     const files = fileNames.map(fileName => {
       return {
@@ -29,13 +29,11 @@ export default async function handler(req, res) {
     return res.status(200).json({ files });
   }
 
-  // Write to file
+  // Write back to a file
   if (req.method === 'POST') {
     const { newContent, fileName } = JSON.parse(req.body);
     await new Promise(resolve => {
-      fs.writeFile(path.resolve(FILE_DIR, fileName), newContent, function() {
-        resolve();
-      });
+      fs.writeFile(path.resolve(FILE_DIR, fileName), newContent, resolve);
     });
 
     return res.status(200).json({ content: newContent, fileName });

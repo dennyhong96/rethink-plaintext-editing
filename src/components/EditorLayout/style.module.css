@@ -26,4 +26,7 @@
   white-space: pre-wrap;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
+  padding: 10px 20px;
+  height: 25rem;
+  overflow: auto;
 }

@@ -1,0 +1,12 @@
+.footer {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.footer .link {
+  margin-top: 12px;
+}
+
+.footer a {
+  color: var(--color-active);
+}

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 // Vendor CSS
 import 'easymde/dist/easymde.min.css';
 
-// Global CSS
-import './style.css';
+// Global theme CSS
+import '@theme/global.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;

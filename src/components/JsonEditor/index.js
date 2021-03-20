@@ -1,22 +1,17 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { EXT_LANG_MAP } from '@lib/constants';
-import getFileExt from '@utils/getFileExt';
 import useFiles from '@hooks/useFiles';
 import useIsEditing from '@hooks/useIsEditing';
 import EditorLayout from '@components/EditorLayout';
 import Textarea from '@components/Textarea';
 import css from './style.module.css';
 
-const SYNTAX_HIGHLIGHTER_STYLE_OVERRIDE = {
-  background: '#fff',
-  minHeight: '100%'
-};
+// 'react-json-view' doesn't support SSR
+const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
-function CodeEditor({ file }) {
+function JsonEditor({ file }) {
   const { content, handleWriteFile } = useFiles({ fileName: file.fileName });
   const { isEditing, toggleEditing } = useIsEditing();
 
@@ -26,30 +21,27 @@ function CodeEditor({ file }) {
       isEditing={isEditing}
       onToggle={toggleEditing}
       preview={
-        <SyntaxHighlighter
-          language={EXT_LANG_MAP[getFileExt(file.fileName)]}
-          style={docco}
-          customStyle={SYNTAX_HIGHLIGHTER_STYLE_OVERRIDE}
-        >
-          {content ?? ''}
-        </SyntaxHighlighter>
+        <div className={css.content}>
+          <ReactJson src={JSON.parse(content ?? '{}')} />
+        </div>
       }
     >
       <Textarea
+        value={content}
         onChange={evt =>
           handleWriteFile({
             newContent: evt.target.value,
             fileName: file.fileName
           })
         }
-        value={content}
       />
     </EditorLayout>
   );
 }
 
-CodeEditor.propTypes = {
-  file: PropTypes.object
+JsonEditor.propTypes = {
+  file: PropTypes.object,
+  write: PropTypes.func
 };
 
-export default CodeEditor;
+export default JsonEditor;

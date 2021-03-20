@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 
 import { readFile, writeFile } from '@lib/api';
 
-const debouncedWriteFile = debounce(writeFile, 250);
-
 const useFiles = ({ fileName }) => {
   const [content, setContent] = useState();
+  const debouncedWriteFile = useRef(debounce(writeFile, 250));
 
   // Fetch file content on editor load
   useEffect(() => {
@@ -14,12 +13,12 @@ const useFiles = ({ fileName }) => {
       const content = await readFile({ fileName });
       setContent(content);
     })();
-  }, []);
+  }, [fileName]);
 
   // Write new content to file, as well as sync local state
   const handleWriteFile = async ({ fileName, newContent }) => {
     setContent(newContent);
-    await debouncedWriteFile({ newContent, fileName });
+    await debouncedWriteFile.current({ newContent, fileName });
   };
 
   return {
