@@ -1,5 +1,3 @@
-### Limitations
-
 ### Notes / Room for Improvements
 
 - To start the project, download and run `npm install && npm run dev`
