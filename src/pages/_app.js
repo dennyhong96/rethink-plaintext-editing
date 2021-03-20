@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './style.css';
+// Vendor CSS
 import 'easymde/dist/easymde.min.css';
+
+// Global CSS
+import './style.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;

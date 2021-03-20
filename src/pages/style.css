@@ -20,3 +20,24 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* Markdown Editor Reset */
+.editor-toolbar {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-top-left-radius: initial;
+  border-top-right-radius: initial;
+}
+
+.CodeMirror.cm-s-easymde.CodeMirror-wrap {
+  padding: 10px 15px;
+  border: none;
+  border-bottom-left-radius: initial;
+  border-bottom-right-radius: initial;
+  height: 25rem;
+}
+
+.editor-preview-full.editor-preview.editor-preview-active {
+  padding: 10px 20px;
+}

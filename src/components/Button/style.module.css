@@ -1,0 +1,19 @@
+.button {
+  font-size: 10px;
+  border: none;
+  color: #fff;
+  font: inherit;
+  line-height: 1;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-text-dark-mute);
+  box-shadow: 0 0 0 2px transparent;
+  transition: 0.3s ease-out;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-active-highlight);
+}

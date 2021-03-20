@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import path from 'path';
 import PropTypes from 'prop-types';
 
+import useFiles from '@hooks/useFiles';
 import css from './style.module.css';
-import { readFile } from '@lib/api';
 
 function Previewer({ file }) {
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      const content = await readFile({ fileName: file.fileName });
-      setContent(content);
-    })();
-  }, []);
+  const { content } = useFiles({ fileName: file.fileName });
 
   return (
     <div className={css.preview}>

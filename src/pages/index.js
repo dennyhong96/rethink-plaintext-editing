@@ -5,23 +5,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { listFiles } from '@lib/api';
+import { TYPE_TO_ICON, REGISTERED_EDITORS } from '@lib/constants';
 import Previewer from '@components/Previewer';
-import MarkdownEditor from '@components/MarkdownEditor';
-import PlaintextEditor from '@components/PlaintextEditor';
-
 import css from './style.module.css';
-
-import IconPlaintextSVG from '../../public/icon-plaintext.svg';
-import IconMarkdownSVG from '../../public/icon-markdown.svg';
-import IconJavaScriptSVG from '../../public/icon-javascript.svg';
-import IconJSONSVG from '../../public/icon-json.svg';
-
-const TYPE_TO_ICON = {
-  txt: IconPlaintextSVG,
-  md: IconMarkdownSVG,
-  js: IconJavaScriptSVG,
-  json: IconJSONSVG
-};
 
 function FilesTable({ files, activeFile, setActiveFile }) {
   return (
@@ -75,12 +61,6 @@ FilesTable.propTypes = {
   files: PropTypes.arrayOf(PropTypes.object),
   activeFile: PropTypes.object,
   setActiveFile: PropTypes.func
-};
-
-// Uncomment keys to register editors for media types
-const REGISTERED_EDITORS = {
-  txt: PlaintextEditor,
-  md: MarkdownEditor
 };
 
 function PlaintextFilesChallenge() {
