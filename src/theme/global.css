@@ -1,16 +1,17 @@
+/* --------------- Custom Properties --------------- */
 :root {
   --color-white: #ffffff;
   --color-background: #f6f8f9;
-
   --color-active: #1f53f1;
   --color-active-highlight: #316ed81f;
-
   --color-text-dark: #000a41;
   --color-text-dark-mute: #607087;
-
   --color-border: #e6e8eb;
+  --color-text: #000;
 }
+/* --------------- End Custom Properties --------------- */
 
+/* --------------- Basic Reset --------------- */
 * {
   box-sizing: border-box;
 }
@@ -24,9 +25,48 @@ body {
 pre {
   margin: 0;
 }
+/* --------------- End Basic Reset --------------- */
 
-/* Markdown Editor Reset */
-.editor-toolbar {
+/* --------------- Global Scroll Bar Reset --------------- */
+:root {
+  --scrollbarBackground: #f0f2f5;
+  --scrollbarThumb: rgba(19, 53, 90, 0.15);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBackground);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbarBackground);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumb);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBackground);
+}
+
+/* --------------- End Global Scroll Bar Reset --------------- */
+
+/* --------------- Markdown Editor Reset --------------- */
+.markdown-editor {
+  height: 100%;
+}
+
+.markdown-editor .EasyMDEContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.markdown-editor .editor-toolbar {
   border-top: none;
   border-left: none;
   border-right: none;
@@ -34,39 +74,32 @@ pre {
   border-top-right-radius: initial;
 }
 
-.CodeMirror.cm-s-easymde.CodeMirror-wrap {
+.markdown-editor .editor-toolbar button {
+  color: var(--color-text);
+}
+
+.markdown-editor .editor-toolbar button:hover,
+.markdown-editor .editor-toolbar button.active {
+  background-color: var(--color-border);
+}
+
+.markdown-editor .CodeMirror.cm-s-easymde.CodeMirror-wrap {
+  flex: 1;
   padding: 10px 15px;
   border: none;
   border-bottom-left-radius: initial;
   border-bottom-right-radius: initial;
-  height: 25rem;
+  background: inherit;
+  color: var(--color-text);
 }
 
-.editor-preview-full.editor-preview.editor-preview-active {
+.markdown-editor .editor-preview-full.editor-preview.editor-preview-active {
   padding: 10px 20px;
 }
+/* --------------- End Markdown Editor Reset --------------- */
 
-/* Better Scroll Bar */
-:root {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  --scrollbarBG: #f0f2f5;
-  --thumbBG: rgba(19, 53, 90, 0.15);
+/* --------------- Override JSON eidtor background --------------- */
+.react-json-view {
+  background-color: inherit !important;
 }
-
-::-webkit-scrollbar {
-  width: 11px;
-  height: 11px;
-}
-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG);
-  border-radius: 6px;
-  border: 3px solid var(--scrollbarBG);
-}
+/* --------------- End Override JSON eidtor background --------------- */

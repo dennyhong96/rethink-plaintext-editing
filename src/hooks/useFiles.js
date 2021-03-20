@@ -5,6 +5,8 @@ import { readFile, writeFile } from '@lib/api';
 
 const useFiles = ({ fileName }) => {
   const [content, setContent] = useState();
+
+  // Debounce to prevent request on every keystroke
   const debouncedWriteFile = useRef(debounce(writeFile, 250));
 
   // Fetch file content on editor load
@@ -15,7 +17,7 @@ const useFiles = ({ fileName }) => {
     })();
   }, [fileName]);
 
-  // Write new content to file, as well as sync local state
+  // Write new content to file, and local state
   const handleWriteFile = async ({ fileName, newContent }) => {
     setContent(newContent);
     await debouncedWriteFile.current({ newContent, fileName });

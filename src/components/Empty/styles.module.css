@@ -1,0 +1,6 @@
+.empty {
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  color: var(--color-text-dark-mute);
+}

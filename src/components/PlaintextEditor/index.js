@@ -5,7 +5,6 @@ import useIsEditing from '@hooks/useIsEditing';
 import useFiles from '@hooks/useFiles';
 import EditorLayout from '@components/EditorLayout';
 import Textarea from '@components/Textarea';
-import css from './style.module.css';
 
 function PlaintextEditor({ file }) {
   const { content, handleWriteFile } = useFiles({ fileName: file.fileName });

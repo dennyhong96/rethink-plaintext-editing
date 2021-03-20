@@ -6,7 +6,6 @@ import useFiles from '@hooks/useFiles';
 import useIsEditing from '@hooks/useIsEditing';
 import useMarkdownPreview from '@hooks/useMarkdownPreview';
 import EditorLayout from '@components/EditorLayout';
-import css from './style.module.css';
 
 function MarkdownEditor({ file }) {
   const { content, handleWriteFile } = useFiles({ fileName: file.fileName });
@@ -18,15 +17,10 @@ function MarkdownEditor({ file }) {
       file={file}
       isEditing={isEditing}
       onToggle={toggleEditing}
-      preview={
-        <div
-          className={css.content}
-          dangerouslySetInnerHTML={{ __html: HTMLContent }}
-        />
-      }
+      preview={<div dangerouslySetInnerHTML={{ __html: HTMLContent }} />}
     >
       <SimpleMDE
-        events
+        className="markdown-editor"
         value={content}
         onChange={val =>
           handleWriteFile({

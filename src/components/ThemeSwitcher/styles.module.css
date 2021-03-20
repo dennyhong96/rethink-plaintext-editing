@@ -1,0 +1,27 @@
+.button {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: var(--color-text-dark-mute);
+  color: var(--color-background);
+  transition: 0.2s ease-out;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.button:active,
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(-color-active-highlight);
+}

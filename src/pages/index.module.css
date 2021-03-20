@@ -1,3 +1,4 @@
+/* Layout */
 .page {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -11,6 +12,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-white);
+  position: relative;
 }
 
 .spacer {
@@ -28,11 +30,4 @@
   align-items: center;
   padding: 40px 20px;
   justify-content: center;
-}
-
-.editorWindow .empty {
-  text-align: center;
-  font-size: 16px;
-  line-height: 16px;
-  color: var(--color-text-dark-mute);
 }

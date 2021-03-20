@@ -1,5 +1,5 @@
 {
-  "dfdfdfd": "Admin",
+  "name": "Admin",
   "email": "admin@neptune.com",
-  "rights": ["admin", "editor", "dsfdsf"]
+  "rights": ["admin", "editor", "contributor"]
 }

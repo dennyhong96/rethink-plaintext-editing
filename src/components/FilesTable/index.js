@@ -1,15 +1,27 @@
 import path from 'path';
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 import { TYPE_TO_ICON } from '@lib/constants';
 import getFileExt from '@utils/getFileExt';
 import parseDate from '@utils/parseDate';
+import { containerVariants, itemVariants } from './motions';
 import css from './styles.module.css';
 
 function FilesTable({ files, activeFile, setActiveFile }) {
-  return (
+  const tableBodyRef = useRef();
+
+  // Set a transition for smoother hover/active look
+  // after framer-motion took care of enter animations
+  const onAnimationComplete = () => {
+    tableBodyRef.current?.querySelectorAll('tr').forEach(row => {
+      row.style.transition = 'all 0.175s ease-in-out';
+    });
+  };
+
+  return files.length ? (
     <div className={css.files}>
       <table>
         <thead>
@@ -18,9 +30,17 @@ function FilesTable({ files, activeFile, setActiveFile }) {
             <th>Modified</th>
           </tr>
         </thead>
-        <tbody>
+        <motion.tbody
+          ref={tableBodyRef}
+          onAnimationComplete={onAnimationComplete}
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
           {files.map((file, idx) => (
-            <tr
+            <motion.tr
+              variants={itemVariants}
               key={`${file.fileName}-${idx}`}
               className={classNames(css.row, {
                 [css.active]:
@@ -39,12 +59,12 @@ function FilesTable({ files, activeFile, setActiveFile }) {
               </td>
 
               <td>{parseDate(file.lastModified)}</td>
-            </tr>
+            </motion.tr>
           ))}
-        </tbody>
+        </motion.tbody>
       </table>
     </div>
-  );
+  ) : null;
 }
 
 FilesTable.propTypes = {

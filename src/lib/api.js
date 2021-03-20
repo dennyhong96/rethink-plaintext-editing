@@ -1,8 +1,7 @@
-export const writeFile = async ({ content }) => {
-  await fetch('/api/files', {
-    method: 'POST',
-    body: JSON.stringify({ content })
-  });
+export const listFiles = async () => {
+  const res = await fetch('/api/files');
+  const data = await res.json();
+  return data;
 };
 
 export const readFile = async ({ fileName }) => {
@@ -11,8 +10,9 @@ export const readFile = async ({ fileName }) => {
   return content;
 };
 
-export const listFiles = async () => {
-  const res = await fetch('/api/files');
-  const data = await res.json();
-  return data;
+export const writeFile = async ({ newContent, fileName }) => {
+  await fetch('/api/files', {
+    method: 'POST',
+    body: JSON.stringify({ newContent, fileName })
+  });
 };

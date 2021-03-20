@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 
+import { useColorMode } from '@context/ColorTheme';
 import useFiles from '@hooks/useFiles';
 import useIsEditing from '@hooks/useIsEditing';
 import EditorLayout from '@components/EditorLayout';
 import Textarea from '@components/Textarea';
-import css from './style.module.css';
 
 // 'react-json-view' doesn't support SSR
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
@@ -14,6 +14,20 @@ const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 function JsonEditor({ file }) {
   const { content, handleWriteFile } = useFiles({ fileName: file.fileName });
   const { isEditing, toggleEditing } = useIsEditing();
+  const { colorMode } = useColorMode();
+
+  const jsonContent = useCallback(
+    content => {
+      try {
+        return JSON.parse(content);
+      } catch (error) {
+        return {
+          error: 'Please make sure your JSON is valid.'
+        };
+      }
+    },
+    [content]
+  );
 
   return (
     <EditorLayout
@@ -21,9 +35,10 @@ function JsonEditor({ file }) {
       isEditing={isEditing}
       onToggle={toggleEditing}
       preview={
-        <div className={css.content}>
-          <ReactJson src={JSON.parse(content ?? '{}')} />
-        </div>
+        <ReactJson
+          theme={colorMode === 'DARK' ? 'chalk' : undefined}
+          src={jsonContent(content)}
+        />
       }
     >
       <Textarea

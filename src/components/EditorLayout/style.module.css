@@ -1,8 +1,14 @@
 .preview {
-  width: 640px;
   background-color: var(--color-white);
   box-shadow: 0 2px 16px hsla(0, 0%, 0%, 0.16);
   border-radius: 4px;
+  overflow: hidden;
+  width: 80%;
+  max-width: 800px;
+  height: 80%;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
 }
 
 .preview .title {
@@ -19,6 +25,11 @@
   align-items: center;
 }
 
+.preview .title > div > span:last-of-type {
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .preview .content {
   font-size: 15px;
   line-height: 1.6;
@@ -26,7 +37,12 @@
   white-space: pre-wrap;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
-  padding: 10px 20px;
+  padding: 20px;
   height: 25rem;
   overflow: auto;
+  flex: 1;
+}
+
+.editorWrapper {
+  flex: 1;
 }

@@ -1,5 +1,6 @@
 import React, { Fragment, useMemo } from 'react';
 import Head from 'next/head';
+import { AnimatePresence } from 'framer-motion';
 
 import useFileList from '@hooks/useFileList';
 import { REGISTERED_EDITORS } from '@lib/constants';
@@ -8,6 +9,8 @@ import Previewer from '@components/Previewer';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import FilesTable from '@components/FilesTable';
+import Empty from '@components/Empty';
+import ThemeSwitcher from '@components/ThemeSwitcher';
 import css from './index.module.css';
 
 function PlaintextFilesChallenge() {
@@ -31,6 +34,8 @@ function PlaintextFilesChallenge() {
         <aside>
           <Header />
 
+          <ThemeSwitcher />
+
           <FilesTable
             files={files}
             activeFile={activeFile}
@@ -43,15 +48,15 @@ function PlaintextFilesChallenge() {
         </aside>
 
         <main className={css.editorWindow}>
-          {!activeFile && (
-            <div className={css.empty}>Select a file to view or edit</div>
-          )}
-          {activeFile &&
-            (Editor ? (
-              <Editor file={activeFile} />
-            ) : (
-              <Previewer file={activeFile} />
-            ))}
+          <AnimatePresence exitBeforeEnter>
+            {!activeFile && <Empty key={activeFile?.fileName ?? ''} />}
+            {activeFile &&
+              (Editor ? (
+                <Editor key={activeFile?.fileName ?? ''} file={activeFile} />
+              ) : (
+                <Previewer key={activeFile?.fileName ?? ''} file={activeFile} />
+              ))}
+          </AnimatePresence>
         </main>
       </div>
     </Fragment>
@@ -59,3 +64,9 @@ function PlaintextFilesChallenge() {
 }
 
 export default PlaintextFilesChallenge;
+
+// TODO:
+// Tests
+// Check if there's not used css classes
+// Check un-used imports
+// Check prop types
