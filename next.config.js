@@ -1,8 +1,7 @@
-const withCSS = require('@zeit/next-css');
-const pipe = require('lodash/fp/pipe');
+// @zeit/next-css package has been deprecated
+// https://www.npmjs.com/package/@zeit/next-css
 
-module.exports = pipe(withCSS)({
-  cssModules: true,
+module.exports = {
   webpack: config => {
     // Load SVGs inline
     config.module.rules.push({
@@ -11,4 +10,4 @@ module.exports = pipe(withCSS)({
     });
     return config;
   }
-});
+};
