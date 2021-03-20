@@ -1,14 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SimpleMDE from 'react-simplemde-editor';
 
-import css from './style.css';
+import useFiles from '@hooks/useFiles';
+import css from './style.module.css';
 
-function MarkdownEditor({ file, write }) {
-  console.log(file, write);
+function MarkdownEditor({ file }) {
+  const { content, handleWriteFile } = useFiles({ fileName: file.fileName });
+
   return (
     <div className={css.editor}>
-      <h3>TODO</h3>
-      <i>text/markdown</i>
+      <SimpleMDE
+        value={content}
+        onChange={val =>
+          handleWriteFile({
+            fileName: file.fileName,
+            newContent: val
+          })
+        }
+      />
     </div>
   );
 }

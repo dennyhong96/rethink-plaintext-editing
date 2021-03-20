@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import css from './style.css';
+import useFiles from '@hooks/useFiles';
+import css from './style.module.css';
 
-function PlaintextEditor({ file, write }) {
-  console.log(file, write);
+function PlaintextEditor({ file }) {
+  const { content, handleWriteFile } = useFiles({ fileName: file.fileName });
+
   return (
     <div className={css.editor}>
-      <h3>TODO</h3>
-      <i>text/plain</i>
+      <textarea
+        onChange={evt =>
+          handleWriteFile({
+            newContent: evt.target.value,
+            fileName: file.fileName
+          })
+        }
+        value={content}
+      />
     </div>
   );
 }

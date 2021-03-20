@@ -1,27 +1,26 @@
+import path from 'path';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import path from 'path';
 import classNames from 'classnames';
 
-import { listFiles } from '../../files';
-
-// Used below, these need to be registered
-import MarkdownEditor from '../components/MarkdownEditor';
-import PlaintextEditor from '../components/PlaintextEditor';
-
-import IconPlaintextSVG from '../public/icon-plaintext.svg';
-import IconMarkdownSVG from '../public/icon-markdown.svg';
-import IconJavaScriptSVG from '../public/icon-javascript.svg';
-import IconJSONSVG from '../public/icon-json.svg';
+import { listFiles } from '@lib/api';
+import Previewer from '@components/Previewer';
+import MarkdownEditor from '@components/MarkdownEditor';
+import PlaintextEditor from '@components/PlaintextEditor';
 
 import css from './style.module.css';
 
+import IconPlaintextSVG from '../../public/icon-plaintext.svg';
+import IconMarkdownSVG from '../../public/icon-markdown.svg';
+import IconJavaScriptSVG from '../../public/icon-javascript.svg';
+import IconJSONSVG from '../../public/icon-json.svg';
+
 const TYPE_TO_ICON = {
-  'text/plain': IconPlaintextSVG,
-  'text/markdown': IconMarkdownSVG,
-  'text/javascript': IconJavaScriptSVG,
-  'application/json': IconJSONSVG
+  txt: IconPlaintextSVG,
+  md: IconMarkdownSVG,
+  js: IconJavaScriptSVG,
+  json: IconJSONSVG
 };
 
 function FilesTable({ files, activeFile, setActiveFile }) {
@@ -37,10 +36,12 @@ function FilesTable({ files, activeFile, setActiveFile }) {
         <tbody>
           {files.map(file => (
             <tr
-              key={file.name}
+              key={file.fileName}
               className={classNames(
                 css.row,
-                activeFile && activeFile.name === file.name ? css.active : ''
+                activeFile && activeFile.fileName === file.fileName
+                  ? css.active
+                  : ''
               )}
               onClick={() => setActiveFile(file)}
             >
@@ -48,10 +49,10 @@ function FilesTable({ files, activeFile, setActiveFile }) {
                 <div
                   className={css.icon}
                   dangerouslySetInnerHTML={{
-                    __html: TYPE_TO_ICON[file.type]
+                    __html: TYPE_TO_ICON[file.fileName.split('.')[1]]
                   }}
                 ></div>
-                {path.basename(file.name)}
+                {path.basename(file.fileName)}
               </td>
 
               <td>
@@ -76,31 +77,10 @@ FilesTable.propTypes = {
   setActiveFile: PropTypes.func
 };
 
-function Previewer({ file }) {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      setValue(await file.text());
-    })();
-  }, [file]);
-
-  return (
-    <div className={css.preview}>
-      <div className={css.title}>{path.basename(file.name)}</div>
-      <div className={css.content}>{value}</div>
-    </div>
-  );
-}
-
-Previewer.propTypes = {
-  file: PropTypes.object
-};
-
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
-  'text/plain': PlaintextEditor,
-  'text/markdown': MarkdownEditor
+  txt: PlaintextEditor,
+  md: MarkdownEditor
 };
 
 function PlaintextFilesChallenge() {
@@ -108,17 +88,15 @@ function PlaintextFilesChallenge() {
   const [activeFile, setActiveFile] = useState(null);
 
   useEffect(() => {
-    const files = listFiles();
-    setFiles(files);
+    (async () => {
+      const { files } = await listFiles();
+      setFiles(files);
+    })();
   }, []);
 
-  const write = file => {
-    console.log('Writing soon... ', file.name);
-
-    // TODO: Write the file to the `files` array
-  };
-
-  const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
+  const Editor = activeFile
+    ? REGISTERED_EDITORS[activeFile.fileName.split('.')[1]]
+    : null;
 
   return (
     <div className={css.page}>
@@ -157,7 +135,7 @@ function PlaintextFilesChallenge() {
       <main className={css.editorWindow}>
         {activeFile && (
           <>
-            {Editor && <Editor file={activeFile} write={write} />}
+            {Editor && <Editor file={activeFile} />}
             {!Editor && <Previewer file={activeFile} />}
           </>
         )}
