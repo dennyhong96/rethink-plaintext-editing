@@ -2,6 +2,7 @@
 
 ### Notes / Room for Improvements
 
+- To start the project, download and run `npm install && npm run dev`
 - For persisting files, I could've done it with localstorage. I've gone with a bit more 'realistic' approach to make the in-memory generated files in files.js actual files in file system (please see \_files directory). Then on user input, uses next.js's api route to update the files in file system.
 - For code editor, only handling .js and .css for now. Could handle more file types.
 - On user input in a file, while making a request to api route to update the file in file system, could also make an update to the 'lastModified' time in the file list sidebar.
