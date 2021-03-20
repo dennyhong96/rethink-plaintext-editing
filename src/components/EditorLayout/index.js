@@ -7,7 +7,14 @@ import Button from '@components/Button';
 import { buttonMotions, layoutMotions, screenMotions } from './motions';
 import css from './style.module.css';
 
-function EditorLayout({ children, file, onToggle, isEditing, preview }) {
+function EditorLayout({
+  children,
+  file,
+  onToggle,
+  isEditing,
+  preview,
+  isUnknownFileType = false
+}) {
   return (
     <motion.div className={css.preview} {...layoutMotions}>
       <div className={css.title}>
@@ -17,17 +24,19 @@ function EditorLayout({ children, file, onToggle, isEditing, preview }) {
         </div>
 
         {/* Render a preview button / edit button */}
-        <AnimatePresence exitBeforeEnter>
-          {isEditing ? (
-            <Button key={'1'} onClick={onToggle} {...buttonMotions}>
-              Preview
-            </Button>
-          ) : (
-            <Button key={'2'} onClick={onToggle} {...buttonMotions}>
-              Edit
-            </Button>
-          )}
-        </AnimatePresence>
+        {!isUnknownFileType && (
+          <AnimatePresence exitBeforeEnter>
+            {isEditing ? (
+              <Button key={'1'} onClick={onToggle} {...buttonMotions}>
+                Preview
+              </Button>
+            ) : (
+              <Button key={'2'} onClick={onToggle} {...buttonMotions}>
+                Edit
+              </Button>
+            )}
+          </AnimatePresence>
+        )}
       </div>
 
       {/* Render a previewer / editor */}
@@ -59,7 +68,8 @@ EditorLayout.propTypes = {
   preview: PropTypes.node,
   file: PropTypes.object,
   onToggle: PropTypes.func,
-  isEditing: PropTypes.bool
+  isEditing: PropTypes.bool,
+  isUnknownFileType: PropTypes.bool
 };
 
 export default EditorLayout;

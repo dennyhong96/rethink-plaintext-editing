@@ -5,13 +5,13 @@ import { AnimatePresence } from 'framer-motion';
 import useFileList from '@hooks/useFileList';
 import { REGISTERED_EDITORS } from '@lib/constants';
 import getFileExt from '@utils/getFileExt';
-import Previewer from '@components/Previewer';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import FilesTable from '@components/FilesTable';
 import Empty from '@components/Empty';
 import ThemeSwitcher from '@components/ThemeSwitcher';
 import css from './index.module.css';
+import EditorLayout from '@components/EditorLayout';
 
 function PlaintextFilesChallenge() {
   const { files, activeFile, setActiveFile } = useFileList();
@@ -54,7 +54,12 @@ function PlaintextFilesChallenge() {
               (Editor ? (
                 <Editor key={activeFile?.fileName ?? ''} file={activeFile} />
               ) : (
-                <Previewer key={activeFile?.fileName ?? ''} file={activeFile} />
+                <EditorLayout
+                  key={activeFile?.fileName ?? ''}
+                  file={activeFile}
+                  isUnknownFileType
+                  preview={'Oops, this file type is not supported yet.'}
+                />
               ))}
           </AnimatePresence>
         </main>

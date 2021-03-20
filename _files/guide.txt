@@ -6,4 +6,4 @@ Once complete, send us a forked GitHub repo link.
 
 Thanks for trying our challenge!
 
-- Rethink Engineeringd
+- Rethink Engineering
